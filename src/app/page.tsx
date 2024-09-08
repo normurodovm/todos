@@ -1,12 +1,6 @@
 import { getData } from "./services/query/get-todo";
 import { Card } from "@/components/todo-card";
 
-interface dataType {
-  title:string;
-  description:string;
-  id:number;
-}
-
 export default async function Home() {
   const data = await getData();
 
