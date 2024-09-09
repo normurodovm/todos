@@ -6,7 +6,6 @@ import { updateTodo } from "./services/mutation/updateTodo";
 import { Card } from "@/components/todo-card";
 import React, { useState, useEffect } from "react";
 
-// Todo interfeysi
 interface Todo {
   id: number;
   title: string;
@@ -14,13 +13,12 @@ interface Todo {
 }
 
 export default function Home() {
-  const [todos, setTodos] = useState<Todo[]>([]); // Todos list
-  const [title, setTitle] = useState<string>(""); // Title uchun state
-  const [description, setDescription] = useState<string>(""); // Description uchun state
-  const [loading, setLoading] = useState<boolean>(false); // Yuklanish holati
-  const [editingTodoId, setEditingTodoId] = useState<number | null>(null); // Tahrirlanayotgan todo ID'si
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [title, setTitle] = useState<string>(""); 
+  const [description, setDescription] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); 
+  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
 
-  // Ma'lumotlarni yuklash uchun effekt
   useEffect(() => {
     async function fetchTodos() {
       const data = await getData();
@@ -29,14 +27,12 @@ export default function Home() {
     fetchTodos();
   }, []);
 
-  // Tahrirlash rejimi boshlanishi
   const startEdit = (todo: Todo) => {
     setTitle(todo.title);
     setDescription(todo.description);
     setEditingTodoId(todo.id);
   };
 
-  // Yangi todo yaratish yoki tahrirlangan todo ni saqlash
   const handleSave = async () => {
     if (!title || !description) {
       alert("Please fill in both title and description");
@@ -46,21 +42,19 @@ export default function Home() {
 
     try {
       if (editingTodoId) {
-        // Tahrirlangan todo ni saqlash
         const updatedTodo = { title, description };
         await updateTodo(editingTodoId, updatedTodo);
         setTodos((prev) =>
           prev.map((todo) => (todo.id === editingTodoId ? { ...todo, ...updatedTodo } : todo))
         );
-        setEditingTodoId(null); // Tahrirlash holatini tugatish
+        setEditingTodoId(null);
       } else {
-        // Yangi todo yaratish
         const newTodo = { title, description };
         const createdTodo = await createTodo(newTodo);
         setTodos((prev) => [...prev, createdTodo]);
       }
 
-      setTitle(""); // Inputlarni tozalash
+      setTitle(""); 
       setDescription("");
     } catch (error) {
       console.error("Error saving todo:", error);

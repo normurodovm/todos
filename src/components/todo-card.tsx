@@ -40,7 +40,7 @@ export const Card: React.FC<DataType> = ({ title, description, id, onEdit }) => 
           {loading ? "Loading..." : "Delete"}
         </button>
         <button
-          onClick={onEdit} // Edit tugmasi bosilganda `onEdit` funksiyasini ishga tushiramiz
+          onClick={onEdit}
           className="h-[60px] px-7 rounded-2xl bg-green-400 hover:bg-green-700 text-white"
         >
           Edit
